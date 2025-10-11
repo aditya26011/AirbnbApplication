@@ -39,4 +39,7 @@ public class Hotel {
     @Embedded
     private HotelContactInfo hotelContactInfo;
 
+    @ManyToOne
+    private User owner;
+
 }
