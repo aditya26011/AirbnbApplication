@@ -18,7 +18,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)// don't need hotel details at same time when we fetch room
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
