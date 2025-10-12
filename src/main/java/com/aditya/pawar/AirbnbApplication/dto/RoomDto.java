@@ -16,7 +16,7 @@ public class RoomDto {
 
     private String[] photos;
 
-    private String amenities;
+    private String[] amenities;
 
     private Integer totalCount;
 
