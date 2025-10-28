@@ -6,6 +6,7 @@ import com.aditya.pawar.AirbnbApplication.entity.Hotel;
 import com.aditya.pawar.AirbnbApplication.entity.Room;
 import com.aditya.pawar.AirbnbApplication.exception.ResourceNotFoundException;
 import com.aditya.pawar.AirbnbApplication.repository.HotelRepository;
+import com.aditya.pawar.AirbnbApplication.repository.RoomRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class HotelServiceImpl implements HotelService{
     private final HotelRepository hotelRepository;
     private final ModelMapper modelMapper;
     private final InventoryService inventoryService;
+    private final RoomRepository roomRepository;
 
     @Override
     public HotelDto createNewHotel(HotelDto hotelDto) {
@@ -56,11 +58,13 @@ public class HotelServiceImpl implements HotelService{
         Hotel hotel=hotelRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Hotel with Id not found:"+id));
 
-            hotelRepository.deleteById(id);
             //TODO: delete the future inventories for the hotel
         for (Room room: hotel.getRooms()){
             inventoryService.deleteFutureInventories(room);
+            roomRepository.deleteById(room.getId());
         }
+        hotelRepository.deleteById(id);
+
     }
 
     @Override
