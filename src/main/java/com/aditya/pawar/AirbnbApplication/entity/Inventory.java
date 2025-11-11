@@ -37,7 +37,7 @@ public class Inventory {
     private LocalDate date;
 
     @Column(nullable = false,columnDefinition = "INTEGER DEFAULT 0")
-    private Integer defaultCount;
+    private Integer bookedCount;
 
     @Column(nullable = false)
     private Integer totalCount;
